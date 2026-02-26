@@ -96,6 +96,7 @@ body {
   grid-template-columns: 2fr 1fr;
   gap: 18px;
   padding: 12px 24px 18px;
+  padding-bottom: 100px; /* room for sticky controls */
   max-width: 1400px;
   width: 100%;
   margin: 0 auto;
@@ -345,6 +346,9 @@ body {
   background: var(--bg-surface);
   border-top: 1px solid var(--border-glass);
   padding: 16px 24px;
+  position: sticky;
+  bottom: 0;
+  z-index: 1500;
 }
 .controls-row {
   max-width: 1400px;
@@ -550,6 +554,7 @@ body {
 }
 
 /* ═══════════════ RESPONSIVE ═══════════════ */
+/* two-column for tablets and small desktops */
 @media (max-width: 960px) {
   #app-main {
     grid-template-columns: 1fr 1fr;
@@ -557,14 +562,28 @@ body {
   }
   #tables-section { grid-column: 1 / -1; }
   #tables-container { flex-direction: row; }
-  .table-card { flex: 1; }
+  .table-card { flex: 1; max-width: 48%; }
+  /* controls wrap and center on narrow desktop */
+  .controls-row { justify-content: center; }
 }
+
+/* single column layout for phones */
 @media (max-width: 640px) {
   #app-main {
     grid-template-columns: 1fr;
   }
   #tables-container { flex-direction: column; }
+  .table-card { max-width: 100%; }
   .controls-row { flex-direction: column; align-items: stretch; }
   #player-name-input { width: 100%; }
   .score-display { font-size: 2rem; }
+  #queue-list li, .rank-row { flex-direction: column; align-items: flex-start; }
+  #controls { position: sticky; bottom: 0; }
 }
+
+/* extra small phones */
+@media (max-width: 480px) {
+  .btn, .btn-score, .toggle-btn { font-size: 0.7rem; padding: 6px 12px; }
+  .score-display { font-size: 1.8rem; }
+}
+
