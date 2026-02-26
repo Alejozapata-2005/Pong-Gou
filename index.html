@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pong Gou – by alejo</title>
+  <meta name="description" content="Pong Gou: gestor de torneos de ping pong con 2 mesas paralelas, cola FIFO y ranking en tiempo real." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet" /> 
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/png" href="Pong gou.png">
+</head>
+<body>
+
+  <!-- ═══════════════ HEADER ═══════════════ -->
+  <header id="app-header">
+    <h1 class="logo">Pong Gou</h1>
+    <span class="subtitle">by alejo</span>
+  </header>
+
+  <!-- ═══════════════ MAIN 3-COLUMN LAYOUT ═══════════════ -->
+  <main id="app-main">
+
+    <!-- ──── LEFT: TABLES ──── -->
+    <section id="tables-section" class="panel">
+      <h2 class="panel-title"><span class="icon">🏓</span> Mesas</h2>
+      <div id="tables-container">
+        <!-- Table cards rendered by JS -->
+        <div class="empty-state" id="tables-empty">Inicia una sesión para ver las mesas</div>
+      </div>
+    </section>
+
+    <!-- ──── CENTER: QUEUE ──── -->
+    <section id="queue-section" class="panel">
+      <h2 class="panel-title"><span class="icon">📋</span> Cola</h2>
+      <ol id="queue-list">
+        <!-- Queue items rendered by JS -->
+      </ol>
+      <div class="empty-state" id="queue-empty">La cola está vacía</div>
+    </section>
+
+    <!-- ──── RIGHT: RANKING removed from main — moved to modal -->
+
+  </main>
+
+  <!-- ═══════════════ CONTROL BAR ═══════════════ -->
+  <footer id="controls">
+    <div class="controls-row">
+      <!-- Mode selector -->
+      <div class="control-group" id="mode-group">
+        <label class="control-label">Modo</label>
+        <div class="toggle-switch" id="mode-toggle">
+          <button class="toggle-btn active" data-mode="solo">Solo</button>
+          <button class="toggle-btn" data-mode="duo">Dúo</button>
+        </div>
+      </div>
+
+      <!-- Add player -->
+      <div class="control-group" id="add-player-group">
+        <label class="control-label" for="player-name-input">Agregar Jugador</label>
+        <div class="input-row">
+          <input type="text" id="player-name-input" placeholder="Nombre del jugador…" maxlength="30" autocomplete="off" />
+          <button id="add-player-btn" class="btn btn-accent" title="Agregar jugador">＋</button>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="control-group" id="actions-group">
+        <label class="control-label">Acciones</label>
+        <div class="btn-row">
+          <button id="start-session-btn" class="btn btn-primary">▶ Empezar Sesión</button>
+          <button id="toggle-ranking-btn" class="btn">🏆 Mostrar Ranking</button>
+          <button id="reset-btn" class="btn btn-danger">🗑 Reiniciar</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════ TOAST CONTAINER ═══════════════ -->
+  <div id="toast-container"></div>
+
+  <!-- ═══════════════ WINNER MODAL OVERLAY ═══════════════ -->
+  <div id="winner-overlay" class="overlay hidden">
+    <div class="overlay-card">
+      <div class="overlay-icon">🎉</div>
+      <h2 id="winner-title"></h2>
+      <p id="winner-detail"></p>
+      <button id="winner-ok-btn" class="btn btn-primary">Continuar</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════ RANKING MODAL ═══════════════ -->
+  <div id="ranking-modal" class="overlay hidden" aria-hidden="true">
+    <div class="overlay-card" style="max-width:720px; width:92%; max-height:80vh; overflow:auto;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <h2 class="panel-title" style="margin:0;"><span class="icon">🏆</span> Ranking</h2>
+        <div>
+          <button id="ranking-close-btn" class="btn">Cerrar</button>
+        </div>
+      </div>
+      <div id="ranking-list">
+        <!-- Ranking rows rendered by JS -->
+      </div>
+      <div class="empty-state" id="ranking-empty">Agrega jugadores para ver el ranking</div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
