@@ -328,6 +328,18 @@ function addPoint(tableId, lado) {
   if (lado === 'A') table.ladoA.score = table.ladoA.score + 1;
   else table.ladoB.score = table.ladoB.score + 1;
 
+  // handle 4-0 'blanqueado' message: show once when entering 4-0
+  const isBlanqueoA = table.ladoA.score === 4 && table.ladoB.score === 0;
+  const isBlanqueoB = table.ladoB.score === 4 && table.ladoA.score === 0;
+  if (!(isBlanqueoA || isBlanqueoB)) {
+    // reset flag when not in blanqueo state
+    table.blanqueoShown = false;
+  }
+  if ((isBlanqueoA || isBlanqueoB) && !table.blanqueoShown) {
+    showToast('blanqueado, sos re malo', 'warning');
+    table.blanqueoShown = true;
+  }
+
   // after scoring, if deuce state (both >=6) flip serve turn for next rally
   if (table.ladoA.score >= 6 && table.ladoB.score >= 6) {
     table.turnoSaque = !table.turnoSaque;
@@ -347,7 +359,7 @@ function addPoint(tableId, lado) {
   if (winner !== 0) {
     const ganadorLado = winner === 1 ? 'A' : 'B';
     // Short delay so user sees the final score
-    setTimeout(() => processRoundEnd(tableId, ganadorLado), 400);
+    setTimeout(() => processRoundEnd(tableId, ganadorLado));
   }
 
   render(state);
@@ -540,6 +552,20 @@ function renderTables(s) {
     scoreArea.appendChild(sideA);
     scoreArea.appendChild(vs);
     scoreArea.appendChild(sideB);
+
+    // reset flag if we leave deuce territory (not tied ≥6)
+    if (!(table.ladoA.score === table.ladoB.score && table.ladoA.score >= 6)) {
+      table.deuceShown = false;
+    }
+
+    // only show the badge the first time we *enter* deuce
+    if (table.ladoA.score === table.ladoB.score && table.ladoA.score >= 6 && !table.deuceShown) {
+      const deuceBadge = document.createElement('div');
+      deuceBadge.className = 'deuce-label';
+      deuceBadge.textContent = 'deuce';
+      scoreArea.appendChild(deuceBadge);
+      table.deuceShown = true;
+    }
 
     card.appendChild(header);
     card.appendChild(scoreArea);
