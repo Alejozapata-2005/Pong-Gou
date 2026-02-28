@@ -63,6 +63,7 @@ body {
   text-align: center;
   padding: 28px 16px 12px;
   position: relative;
+  overflow-x: hidden;
 }
 .logo {
   font-family: var(--font-display);
@@ -101,6 +102,7 @@ body {
   width: 100%;
   margin: 0 auto;
   min-height: 0; /* allow children to shrink properly */
+  overflow-x: hidden;
 }
 
 
@@ -237,6 +239,9 @@ body {
   color: var(--text-primary);
   margin-bottom: 10px;
   min-height: 1.3em;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 .score-display {
   font-family: var(--font-display);
@@ -583,12 +588,19 @@ body {
 /* two-column for tablets and small desktops */
 @media (max-width: 960px) {
   #app-main {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     padding: 12px 16px;
+    gap: 14px;
   }
   #tables-section { grid-column: 1 / -1; }
-  #tables-container { flex-direction: row; }
-  .table-card { flex: 1; max-width: 48%; }
+  #tables-container { 
+    flex-direction: row; 
+    gap: 12px;
+  }
+  .table-card { 
+    flex: 1; 
+    max-width: 100%;
+  }
   /* controls wrap and center on narrow desktop */
   .controls-row { justify-content: center; }
 }
@@ -597,19 +609,140 @@ body {
 @media (max-width: 640px) {
   #app-main {
     grid-template-columns: 1fr;
+    padding: 8px 12px;
   }
   #tables-container { flex-direction: column; }
-  .table-card { max-width: 100%; }
-  .controls-row { flex-direction: column; align-items: stretch; }
-  #player-name-input { width: 100%; }
-  .score-display { font-size: 2rem; }
-  #queue-list li, .rank-row { flex-direction: column; align-items: flex-start; }
-  #controls { position: sticky; bottom: 0; }
+  .table-card { 
+    max-width: 100%; 
+    padding: 12px 14px;
+    margin-bottom: 8px;
+  }
+  .table-card-header {
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .table-card-header h3 {
+    font-size: 0.9rem;
+  }
+  .score-area {
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .side-block {
+    padding: 0 4px;
+  }
+  .side-label { font-size: 0.65rem; }
+  .side-players { font-size: 0.8rem; margin-bottom: 6px; }
+  .score-display { font-size: 1.8rem; }
+  .score-vs { font-size: 1rem; }
+  .btn-score {
+    font-size: 0.7rem;
+    padding: 4px 12px;
+    margin-top: 6px;
+  }
+  .controls-row { 
+    flex-direction: column; 
+    align-items: stretch; 
+    gap: 12px;
+  }
+  .control-group { gap: 4px; }
+  #player-name-input { 
+    width: 100%; 
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+  .input-row { gap: 4px; }
+  #add-player-btn {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+  .btn-row {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .btn {
+    width: 100%;
+    font-size: 0.75rem;
+    padding: 6px 12px;
+  }
+  #queue-list li, .rank-row { 
+    flex-direction: column; 
+    align-items: flex-start; 
+    padding: 8px 10px;
+    font-size: 0.8rem;
+  }
+  #controls { 
+    position: sticky; 
+    bottom: 0; 
+    padding: 12px 12px;
+  }
+  .panel {
+    padding: 12px 14px;
+  }
+  .panel-title {
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+  }
 }
 
 /* extra small phones */
 @media (max-width: 480px) {
-  .btn, .btn-score, .toggle-btn { font-size: 0.7rem; padding: 6px 12px; }
-  .score-display { font-size: 1.8rem; }
+  html { font-size: 14px; }
+  #app-main {
+    padding: 6px 10px;
+  }
+  .logo { font-size: clamp(1.8rem, 5vw, 2.4rem); }
+  .panel {
+    padding: 10px 12px;
+  }
+  .panel-title {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+    gap: 4px;
+  }
+  .table-card {
+    padding: 10px 12px;
+    margin-bottom: 6px;
+  }
+  .score-display { 
+    font-size: 1.6rem; 
+  }
+  .score-vs { font-size: 0.9rem; }
+  .side-players { font-size: 0.75rem; }
+  .side-label { font-size: 0.6rem; }
+  .btn-score { 
+    font-size: 0.65rem; 
+    padding: 4px 10px;
+    margin-top: 4px;
+  }
+  .btn, .toggle-btn { 
+    font-size: 0.68rem; 
+    padding: 5px 10px; 
+  }
+  #add-player-btn {
+    padding: 5px 10px;
+    font-size: 0.7rem;
+  }
+  #controls {
+    padding: 10px 10px;
+  }
+  .controls-row {
+    gap: 10px;
+  }
+  .control-label {
+    font-size: 0.65rem;
+  }
+  #player-name-input {
+    font-size: 0.75rem;
+    padding: 5px 10px;
+  }
+  .input-row { gap: 3px; }
+  #queue-list li, .rank-row { 
+    padding: 6px 8px;
+    font-size: 0.75rem;
+  }
+  .toggle-btn {
+    padding: 6px 12px;
+  }
 }
 
